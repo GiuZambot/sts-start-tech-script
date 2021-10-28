@@ -1,0 +1,25 @@
+1 - Cyro — for
+2 - Luana Kuster — if
+3 - Mari Rufino — while
+4 - Úrsula — !
+6 - Rafa Bittencourt — push()
+8 - Clara Vasques — toUpperCase
+13 - Paloma Calado - Math cos
+14 - Paloma Souza - Math sin
+15 - Laurão - querySelector
+19 - giu - let
+12 - Laura — splice
+5 - Gabe Berté — slice
+9 - Jislane Santana — map()
+10 - Iza — filter
+
+7 - Pandini — 
+
+11 - Eudes Rodrigues - return
+ 
+
+
+
+16 - Emily
+17 - Laila
+18 - May
