@@ -12,6 +12,8 @@
 * Gui
 * Izabela
 * Jislane
+* Ju
+* Joyce
 * Laila
 * Laura
 * Laurão
