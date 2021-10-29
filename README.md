@@ -15,7 +15,7 @@
 * Laila
 * Laura
 * Laurão
-* Luanad
+* Luana
 * Mariana
 * Mayhhara
 * Paloma 

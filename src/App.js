@@ -3,6 +3,7 @@ import './App.css';
 import { snippets, categories } from './snippets/snippets';
 let valor = "";
 let transfer = '';
+let ver = false;
 
 export class App extends Component {
   loging = () => {
@@ -20,7 +21,7 @@ export class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h3>Start Tech Script - STS <a href="https://github.com/start-tech-react/JEP">Repositório GitHub</a></h3>
+          <h3>Start Tech Script - STS</h3>
         </header>
         <main>
           <Explorer loging={() => this.loging()} tranfer={this.state.conteudo} />
@@ -117,17 +118,25 @@ class Explorer extends Component {
 }
 
 class Console extends Component {
+  state = { log: true };
   execute = () => {
     sts(document.getElementById('code').value);
     this.props.loging();
+  }
+
+  verNaoVer = () => {
+    ver = !ver;
+    this.setState({ log: !this.state.log });
+    this.execute();
   }
 
   render() {
     return (
       <div className="box">
         <div className="console">
-          <textarea id="code" defaultValue={valor} cols="50" rows="10" placeholder="Cole ou digite o código aqui, depois clique em Executar."></textarea>
+          <textarea id="code" defaultValue={valor} cols="25" rows="10" placeholder="Cole ou digite o código aqui, depois clique em Executar."></textarea>
           <button onClick={this.execute} className='btn-executar'>Executar o código acima.</button>
+          <button onClick={this.verNaoVer} className='btn-executar'>{this.state.log ? 'Ver Tradução' : 'Fechar Tradução'}</button>
           <div className="consolelog">{this.props.tranfer}</div>
         </div>
       </div>
@@ -138,7 +147,6 @@ class Console extends Component {
 export default App;
 
 function evaluate(y) {
-  //transfer = [];
   var script = document.createElement('script');
   script.type = "text/javascript";
   script.text = "{console.clear();" + y + "}";
@@ -155,11 +163,14 @@ console.log = function () {
 
 const cmd = {
   "joyce": "console.log",
+  "ju": "console.log",
+  "jj": "console.log",
   "gui": "Math.pow",
   "palomac": "Math.cos",
   "palomas": "Math.sin",
   "laurao": "document.querySelector",
-  "emily": ""
+  "emi": "typeof",
+  "eudes": "Math.random"
 }
 
 const cmd2 = {
@@ -182,7 +193,13 @@ const cmd5 = {
   "laura": "splice",
   "gabe": "slice",
   "jis": "map",
-  "iza": "filter"
+  "iza": "filter",
+  "pan": "pop",
+  "laila": "join"
+}
+
+const cmd6 = {
+  "may": "=>"
 }
 
 function sts(y) {
@@ -259,11 +276,35 @@ function translate(y, ponto) {
         if (ponto) stscript += ';';
         break;
 
+      case cmd6.hasOwnProperty(comando[0]):
+        if (comando[2].includes('#')) {
+          comando[2] = comando[1].replace('#', ':');
+          comando[2] = translate(comando[2], 0);
+        }
+
+        let chavesf = comando[3];
+        if (chavesf.includes('&')) {
+          chavesf = chavesf.split("&");
+        } else {
+          chavesf = [comando[3]];
+        }
+
+        chavesf = chavesf.map(com => {
+          if (com.includes('#')) {
+            com = com.replace('#', ':');
+            return translate(com, 0);
+          }
+          return com;
+        })
+
+        stscript += `const ${comando[1]} = (${comando[2]}) ${cmd6[comando[0]]} {${chavesf}};`;
+        break;
+
       default:
         stscript += comando[0] + ";";
         break;
     }
   });
-  console.log(stscript);
+  if (ver) console.log(stscript);
   return stscript;
 }
